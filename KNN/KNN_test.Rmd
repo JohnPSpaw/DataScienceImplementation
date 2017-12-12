@@ -1,0 +1,79 @@
+---
+title: 'KNN Implementation: Data application (Iris)'
+author: "John Spaw"
+date: "12/12/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#Data Load
+library(datasets)
+library(ggplot2)
+iris_data <- iris
+```
+
+```{r}
+#Intial Plots
+ggplot(iris, aes(x = Petal.Length, y = Sepal.Length, colour = Species)) + 
+  geom_point() +
+  ggtitle('Iris Species by Petal and Sepal Length')
+
+ggplot(iris, aes(x = Petal.Length, y = Petal.Width, color = Species)) +
+  geom_point() +
+  ggtitle('Iris Species by Petal Length and Width')
+
+ggplot(iris, aes(x = Sepal.Length, y =Sepal.Width, color = Species)) + 
+  geom_point() +
+  ggtitle('Iris Species by Sepal Length and Width')
+```
+
+
+```{r}
+#Training/Test Split
+library(caret)
+
+##Set sample size
+smp_size <- floor(0.75 * nrow(iris_data))
+
+## set the seed to make your partition reproductible
+set.seed(123)
+train_index <- sample(seq_len(nrow(iris_data)), size = smp_size)
+
+training_data <- iris_data[train_index, ]
+test_data <- iris_data[-train_index, ]
+
+```
+
+
+```{r}
+#Load implementation of KNN classifier
+source("KNN_implementation.R")
+```
+
+```{r}
+#Predict
+test_data$predict <- knn_predict.func(test_set = test_data, train_set = training_data, k_num=4)
+print(test_data$predict)
+```
+
+```{r}
+#Accuracy
+accuracy(test_data)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
