@@ -27,7 +27,6 @@ knn_predict.func <- function(test_set, train_set, k_num)
   train_labels <- train_set[,5] #vector of labels for training set
   test_labels <- rep(NA,nrow(test_set))
 
-  
   #Loop through each point in the test set:
   for(i in c(1:nrow(test_set)))
   {
